@@ -18,20 +18,20 @@ class TestValueObject:
         assert equality is True
 
     @pytest.mark.parametrize(
-        'value1,value2,type1,type2',
+        'type1,value1,type2,value2',
         [
             pytest.param(
+                ValueObjectA,
                 1,
+                ValueObjectA,
                 2,
-                ValueObjectA,
-                ValueObjectA,
                 id='different_values',
             ),
             pytest.param(
-                1,
-                1,
                 ValueObjectA,
+                1,
                 ValueObjectB,
+                1,
                 id='different_types',
             ),
         ],
