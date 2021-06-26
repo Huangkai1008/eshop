@@ -1,0 +1,40 @@
+name: EShop
+
+on: [push]
+
+jobs:
+  build:
+    name: ${{ matrix.os }} / ${{ matrix.python-version }}
+    runs-on: ${{ matrix.image }}
+    strategy:
+      matrix:
+        os: [ Ubuntu, macOS, Windows ]
+        python-version: ["3.9", "3.10", "3.11" ]
+        include:
+          - os: Ubuntu
+            image: ubuntu-22.04
+          - os: Windows
+            image: windows-2022
+          - os: macOS
+            image: macos-12
+        fail-fast: false
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
+      - name: Lint
+        run: |
+          mypy
+          black . --check
+          isort . --check-only
+          flake8 .
+      - name: Test
+        run: |
+          pytest

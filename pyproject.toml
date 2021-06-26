@@ -13,8 +13,6 @@ flake8 = "^6.0.0"
 black = "^23.1.0"
 isort = "^5.12.0"
 mypy = "^1.1.1"
-
-[tool.poetry.group.test.dependencies]
 pytest = "^7.2.2"
 coverage = "^7.2.2"
 
@@ -36,7 +34,7 @@ disallow_untyped_defs = true
 
 [[tool.poetry.source]]
 name = "tsinghua"
-default = true
+priority = "default"
 url = "https://pypi.tuna.tsinghua.edu.cn/simple/"
 
 [build-system]
