@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://squidfunk.github.io/mkdocs-material/schema.json
+site_name: EShop
+theme:
+  name: material
+plugins:
+  - search
+#  - gen-files:
+#      scripts:
+#        - docs/gen_ref_pages.py
+  - mkdocstrings
+nav:
+  - Home: index.md
+  - Code Reference:
+      - Entity: reference/seedwork/domain/entity.md
