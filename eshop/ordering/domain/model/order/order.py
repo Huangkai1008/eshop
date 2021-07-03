@@ -1,7 +1,13 @@
+# mypy: disable-error-code="override"
+# See also:
+# - https://github.com/python/mypy/pull/15503
+
 from dataclasses import InitVar, dataclass, field
 from datetime import datetime
 from decimal import Decimal
 from typing import Literal, Optional, Union
+
+from eshop.seedwork.domain.aggregate_root import AggregateRoot
 
 from .address import Address
 from .order_line import OrderLine
@@ -11,7 +17,7 @@ __all__ = ['Order']
 
 
 @dataclass
-class Order:
+class Order(AggregateRoot):
     user_id: InitVar[str]
     user_name: InitVar[str]
 
@@ -42,6 +48,7 @@ class Order:
         card_holder_name: str,
         card_expiration: datetime,
     ) -> None:
+        super().__post_init__()
         ...
 
     def add_order_line(
@@ -52,24 +59,20 @@ class Order:
         discount: Decimal,
         picture_url: str,
         units: int = 1,
-    ) -> None:
-        existing_order_for_product: Optional[OrderLine] = next(
+    ) -> OrderLine:
+        """Add a new order line to the order or update the existing one."""
+        order_line: Optional[OrderLine] = next(
             (o for o in self._order_lines if o.product_id == product_id), None
         )
-        if existing_order_for_product:
-            existing_order_for_product.discount = max(
-                discount, existing_order_for_product.discount
-            )
-            existing_order_for_product.add_units(units)
+        if order_line:
+            order_line.discount = max(discount, order_line.discount)
+            order_line.add_units(units)
         else:
             order_line = OrderLine(
                 product_id, product_name, picture_url, unit_price, discount, units
             )
             self._order_lines.append(order_line)
-
-    @property
-    def buyer_id(self) -> str:
-        return self.buyer_id
+        return order_line
 
     @property
     def total(self) -> Union[Decimal, Literal[0]]:
