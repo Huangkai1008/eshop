@@ -7,6 +7,7 @@ from datetime import datetime
 from decimal import Decimal
 from typing import Literal, Optional, Union
 
+from eshop.ordering.domain.event import OrderCreated
 from eshop.seedwork.domain.aggregate_root import AggregateRoot
 
 from .address import Address
@@ -49,7 +50,18 @@ class Order(AggregateRoot):
         card_expiration: datetime,
     ) -> None:
         super().__post_init__()
-        ...
+
+        self.add_event(
+            OrderCreated(
+                user_id,
+                user_name,
+                card_type_id,
+                card_number,
+                card_security_number,
+                card_holder_name,
+                card_expiration,
+            )
+        )
 
     def add_order_line(
         self,
