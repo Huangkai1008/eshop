@@ -8,7 +8,7 @@ from decimal import Decimal
 from typing import Literal, Optional, Union
 
 from eshop.ordering.domain.event import OrderCreated
-from eshop.seedwork.domain.aggregate_root import AggregateRoot
+from seedwork.domain.aggregate_root import AggregateRoot
 
 from .address import Address
 from .order_line import OrderLine

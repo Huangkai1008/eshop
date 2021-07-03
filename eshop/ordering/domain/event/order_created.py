@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from datetime import datetime
 
-from eshop.seedwork.domain.event import Event
+from seedwork.domain.event import Event
 
 __all__ = ['OrderCreated']
 

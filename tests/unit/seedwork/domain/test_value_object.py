@@ -3,7 +3,7 @@ from typing import Optional, TypeVar, Union
 
 import pytest
 
-from eshop.seedwork.domain.value_object import ValueObject
+from seedwork.domain.value_object import ValueObject
 
 
 @dataclass(frozen=True)

@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from eshop.seedwork.domain.entity import Entity
+from seedwork.domain.entity import Entity
 
 
 @dataclass

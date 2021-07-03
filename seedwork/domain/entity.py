@@ -2,7 +2,7 @@ import uuid
 from dataclasses import dataclass, field
 from typing import Any
 
-from eshop.seedwork.domain.event import Event
+from seedwork.domain.event import Event
 
 __all__ = ['Entity']
 
