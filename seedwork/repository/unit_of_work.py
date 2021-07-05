@@ -4,6 +4,8 @@ from typing import Optional
 
 from typing_extensions import Self
 
+__all__ = ['AbstractUnitOfWork']
+
 
 class AbstractUnitOfWork(ABC):
     def commit(self) -> None:

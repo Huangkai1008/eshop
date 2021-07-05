@@ -5,10 +5,15 @@ from typing import Any
 import pytest
 
 from eshop.ordering.domain.exception import OrderingDomainException
-from eshop.ordering.domain.model.order.order import Order
+from eshop.ordering.domain.model.order import Order
 
 
 class TestOrder:
+    def test_create_new_order_raise_new_event(self, order: Order) -> None:
+        expected = 1
+
+        assert len(order.events) == expected
+
     def test_add_order_line_succeeds(self, order: Order) -> None:
         with does_not_raise():
             order.add_order_line(
