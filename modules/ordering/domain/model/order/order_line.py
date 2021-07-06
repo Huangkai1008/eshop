@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from decimal import Decimal
 
-from eshop.ordering.domain.exception import OrderingDomainException
+from modules.ordering.domain.exception import OrderingDomainException
 from seedwork.domain import Entity
 
 __all__ = ['OrderLine']

@@ -2,8 +2,8 @@ from datetime import datetime, timedelta
 
 import pytest
 
-from eshop.ordering.domain.model.order.address import Address
-from eshop.ordering.domain.model.order.order import Order
+from modules.ordering.domain.model.order.address import Address
+from modules.ordering.domain.model.order.order import Order
 
 
 @pytest.fixture

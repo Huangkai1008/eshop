@@ -4,8 +4,8 @@ from typing import Any
 
 import pytest
 
-from eshop.ordering.domain.exception import OrderingDomainException
-from eshop.ordering.domain.model.order import Order
+from modules.ordering.domain.exception import OrderingDomainException
+from modules.ordering.domain.model.order import Order
 
 
 class TestOrder:

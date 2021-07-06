@@ -1,6 +1,6 @@
 from typing import Protocol
 
-from eshop.ordering.domain.model.order import Order
+from modules.ordering.domain.model.order import Order
 
 __all__ = ['IOrderRepository']
 
