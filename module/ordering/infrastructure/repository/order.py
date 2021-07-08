@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 
-from modules.ordering.domain.model.order import IOrderRepository, Order
+from module.ordering.domain.model.order import IOrderRepository, Order
 
 __all__ = ['OrderRepository']
 

@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from typing_extensions import Self
 
-from modules.ordering.infrastructure.repository.order import OrderRepository
+from module.ordering.infrastructure.repository.order import OrderRepository
 from seedwork.infrastructure.persistence.sqlalchemy import SQLAlchemyUnitOfWork
 
 __all__ = ['UnitOfWork']

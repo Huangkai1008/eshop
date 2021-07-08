@@ -1,7 +1,7 @@
 from abc import abstractmethod
 from typing import Protocol
 
-from modules.ordering.domain.model.order import Order
+from module.ordering.domain.model.order import Order
 
 __all__ = ['IOrderRepository']
 

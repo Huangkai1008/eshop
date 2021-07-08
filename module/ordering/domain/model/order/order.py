@@ -7,7 +7,7 @@ from datetime import datetime
 from decimal import Decimal
 from typing import Literal, Optional, Union
 
-from modules.ordering.domain.event import OrderCreated
+from module.ordering.domain.event import OrderCreated
 from seedwork.domain.aggregate_root import AggregateRoot
 
 from .address import Address

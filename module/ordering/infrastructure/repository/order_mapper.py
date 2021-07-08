@@ -10,7 +10,7 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import foreign, registry, relationship
 
-from modules.ordering.domain.model.order import Address, Order, OrderLine
+from module.ordering.domain.model.order import Address, Order, OrderLine
 
 mapper_registry = registry()
 
