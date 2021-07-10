@@ -9,10 +9,13 @@ __all__ = ['CreateOrder']
 
 
 class CreateOrder(Command):
+    user_id: str
+    user_name: str
+
     city: str
     street: str
     state: str
-    zip_code: str
+    zipcode: str
     country: str
 
     card_number: str = Field(min_length=12, max_length=19)
