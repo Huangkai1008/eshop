@@ -2,7 +2,7 @@ from datetime import datetime
 
 from pydantic import Field, field_validator
 
-from module.ordering.application.schema import OrderLine
+from module.ordering.application.contract import OrderLineModel
 from seedwork.application import Command
 
 __all__ = ['CreateOrder']
@@ -24,7 +24,7 @@ class CreateOrder(Command):
     card_security_number: str
     card_type_id: int
 
-    order_lines: list[OrderLine] = Field(min_length=1)
+    order_lines: list[OrderLineModel] = Field(min_length=1)
 
     @field_validator('card_expiration')
     def card_expiration_must_be_in_the_future(cls, v: datetime) -> datetime:
