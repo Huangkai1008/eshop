@@ -30,10 +30,6 @@ class OrderLine(Entity):
         self._total_should_greater_than_discount()
 
     @property
-    def product_name(self) -> str:
-        return self._product_name
-
-    @property
     def discount(self) -> Decimal:
         return self._discount
 
