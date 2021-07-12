@@ -1,7 +1,8 @@
-from pydantic import BaseModel, ConfigDict
+from pydantic.dataclasses import dataclass
 
 __all__ = ['Command']
 
 
-class Command(BaseModel):
-    model_config = ConfigDict(frozen=True)
+@dataclass(frozen=True)
+class Command:
+    ...
