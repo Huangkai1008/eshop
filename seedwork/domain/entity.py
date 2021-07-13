@@ -1,22 +1,38 @@
 import uuid
 from dataclasses import dataclass, field
-from typing import Any
+from typing import Any, Union
+
+from typing_extensions import TypeAlias
 
 from seedwork.domain.event import Event
 
-__all__ = ['Entity']
+EntityId: TypeAlias = Union[int, str]
+
+
+__all__ = ['EntityId', 'Entity']
 
 
 @dataclass
 class Entity:
-    id: str = field(init=False)
+    """Entity base class.
+
+    Attributes:
+        id: Unique identifier of the entity.
+        events: Domain events that occurred on the entity.
+
+    See Also:
+        - https://enterprisecraftsmanship.com/posts/entity-base-class/
+
+    """
+
+    id: EntityId = field(init=False)
     events: list[Event] = field(init=False, default_factory=list)
 
     def __post_init__(self) -> None:
         self.id = self.next_id()
 
     @classmethod
-    def next_id(cls) -> str:
+    def next_id(cls) -> EntityId:
         return str(uuid.uuid4())
 
     def add_event(self, event: Event) -> None:
