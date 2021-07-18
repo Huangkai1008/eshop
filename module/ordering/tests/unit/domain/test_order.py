@@ -1,6 +1,6 @@
 from contextlib import nullcontext as does_not_raise
 from decimal import Decimal
-from typing import Any
+from typing import Any, Callable
 
 import pytest
 
@@ -9,12 +9,15 @@ from module.ordering.domain.model.order import Order
 
 
 class TestOrder:
-    def test_create_new_order_raise_new_event(self, order: Order) -> None:
+    def test_create_new_order_raise_new_event(self) -> None:
+        order = self._order_factory()
         expected = 1
 
         assert len(order.events) == expected
 
-    def test_add_order_line_succeeds(self, order: Order) -> None:
+    def test_add_order_line_succeeds(self) -> None:
+        order = self._order_factory()
+
         with does_not_raise():
             order.add_order_line(
                 1,
@@ -92,7 +95,6 @@ class TestOrder:
     )
     def test_add_order_line_fails(
         self,
-        order: Order,
         product_id: int,
         product_name: str,
         unit_price: Decimal,
@@ -101,6 +103,8 @@ class TestOrder:
         units: int,
         expectation: Any,
     ) -> None:
+        order = self._order_factory()
+
         with expectation:
             order.add_order_line(
                 product_id,
@@ -110,3 +114,7 @@ class TestOrder:
                 picture_url,
                 units,
             )
+
+    @pytest.fixture(autouse=True)
+    def _register_order_factory(self, order_factory: Callable[..., Order]) -> None:
+        self._order_factory: Callable[..., Order] = order_factory
