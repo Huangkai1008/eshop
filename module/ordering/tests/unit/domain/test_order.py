@@ -116,5 +116,5 @@ class TestOrder:
             )
 
     @pytest.fixture(autouse=True)
-    def _register_order_factory(self, order_factory: Callable[..., Order]) -> None:
+    def _register_factory(self, order_factory: Callable[..., Order]) -> None:
         self._order_factory: Callable[..., Order] = order_factory
