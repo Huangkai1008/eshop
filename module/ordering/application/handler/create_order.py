@@ -1,9 +1,10 @@
 from dataclasses import dataclass
 
+from seedwork.infrastructure.logging import Logger
+
 from module.ordering.application.command.create_order import CreateOrder
 from module.ordering.domain.model.order import Address, Order
 from module.ordering.infrastructure.repository.unit_of_work import UnitOfWork
-from seedwork.infrastructure.logging import Logger
 
 __all__ = ['CreateOrderHandler']
 
