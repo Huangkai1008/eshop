@@ -7,8 +7,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-sqlalchemy = {version = "^2.0.17", extras = ["mypy"]}
-pydantic = "^2.0.2"
+seedwork-python = "^0.1.1"
 
 [tool.poetry.group.dev.dependencies]
 flake8 = "^6.0.0"
@@ -44,8 +43,13 @@ disallow_untyped_defs = true
 
 [[tool.poetry.source]]
 name = "tsinghua"
-priority = "default"
 url = "https://pypi.tuna.tsinghua.edu.cn/simple/"
+priority = "default"
+
+
+[[tool.poetry.source]]
+name = "PyPI"
+priority = "primary"
 
 [build-system]
 requires = ["poetry-core"]
