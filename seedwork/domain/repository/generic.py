@@ -10,20 +10,16 @@ T = TypeVar('T', bound=Entity)
 
 class GenericRepository(Generic[T], metaclass=ABCMeta):
     @abstractmethod
-    def get(self, entity_id: EntityId) -> Optional[T]:
-        """Get an entity based on the given primary key identifier.
+    def add(self, entity: T) -> T:
+        """Add an entity.
 
         Returns:
-            The entity instance or `None` if not found.
+            The added entity instance.
 
         """
 
     @abstractmethod
-    def create(self, entity: T) -> T:
-        """Create an entity."""
-
-    @abstractmethod
-    def update(self, entity_id: EntityId, entity: T) -> Optional[T]:
+    def update(self, entity: T) -> Optional[T]:
         """Update and return an entity based on the given primary key identifier.
 
         Returns:
@@ -44,5 +40,14 @@ class GenericRepository(Generic[T], metaclass=ABCMeta):
         """Commit the current transaction.
 
         If the implementation isn't transactional, this method does nothing.
+
+        """
+
+    @abstractmethod
+    def get(self, entity_id: EntityId) -> Optional[T]:
+        """Get an entity based on the given primary key identifier.
+
+        Returns:
+            The entity instance or `None` if not found.
 
         """
