@@ -1,15 +1,13 @@
 from datetime import datetime
 
 from pydantic import Field, field_validator
-from pydantic.dataclasses import dataclass
-from seedwork.application import Command
 
 from module.ordering.application.contract import OrderLineModel
+from seedwork.application import Command
 
 __all__ = ['CreateOrder']
 
 
-@dataclass(frozen=True)
 class CreateOrder(Command):
     user_id: str
     user_name: str

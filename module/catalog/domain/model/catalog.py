@@ -1,9 +1,8 @@
 from dataclasses import dataclass
 from decimal import Decimal
 
-from seedwork.domain import Entity
-
 from module.catalog.domain.exception import CatalogDomainException
+from seedwork.domain import Entity
 
 __all__ = ['Catalog']
 

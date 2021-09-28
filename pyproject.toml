@@ -7,7 +7,8 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-seedwork-python = "^0.1.1"
+sqlalchemy = "^2.0.19"
+pydantic = "^2.1.1"
 
 [tool.poetry.group.dev.dependencies]
 flake8 = "^6.0.0"
