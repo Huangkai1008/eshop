@@ -18,7 +18,7 @@ def engine(url: str = 'sqlite:///:memory:') -> Generator[Engine, None, None]:
 def table(engine: Engine) -> Generator[Table, None, None]:
     mapper_registry = registry()
 
-    t = Table(
+    sample_table = Table(
         'table',
         mapper_registry.metadata,
         Column('id', Integer, primary_key=True),
@@ -28,7 +28,7 @@ def table(engine: Engine) -> Generator[Table, None, None]:
 
     mapper_registry.metadata.create_all(engine)
 
-    yield t
+    yield sample_table
 
     mapper_registry.metadata.drop_all(engine)
 
