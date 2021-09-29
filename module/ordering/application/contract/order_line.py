@@ -1,6 +1,6 @@
 from decimal import Decimal
 
-from pydantic import BaseModel
+from seedwork.application import BaseModel
 
 __all__ = ['OrderLineModel']
 
