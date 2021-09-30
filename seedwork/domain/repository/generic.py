@@ -3,12 +3,14 @@ from typing import Generic, Optional, TypeVar
 
 from seedwork.domain.entity import Entity, EntityId
 
-__all__ = ['GenericRepository']
+__all__ = ['GenericRepository', 'ID', 'T']
 
+
+ID = TypeVar('ID', bound=EntityId)
 T = TypeVar('T', bound=Entity)
 
 
-class GenericRepository(Generic[T], metaclass=ABCMeta):
+class GenericRepository(Generic[ID, T], metaclass=ABCMeta):
     @abstractmethod
     def add(self, entity: T) -> T:
         """Add an entity.
@@ -28,7 +30,7 @@ class GenericRepository(Generic[T], metaclass=ABCMeta):
         """
 
     @abstractmethod
-    def delete(self, entity_id: EntityId) -> None:
+    def delete(self, entity_id: ID) -> None:
         """Delete an entity.
 
         If the entity doesn't exist, do nothing.
@@ -44,7 +46,7 @@ class GenericRepository(Generic[T], metaclass=ABCMeta):
         """
 
     @abstractmethod
-    def get(self, entity_id: EntityId) -> Optional[T]:
+    def get(self, entity_id: ID) -> Optional[T]:
         """Get an entity based on the given primary key identifier.
 
         Returns:
