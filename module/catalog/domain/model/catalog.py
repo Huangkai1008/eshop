@@ -4,8 +4,6 @@ from decimal import Decimal
 from module.catalog.domain.exception import CatalogDomainException
 from seedwork.domain import Entity
 
-__all__ = ['Catalog']
-
 
 @dataclass
 class Catalog(Entity):

@@ -1,10 +1,6 @@
-from typing import Protocol, TypeVar
+from typing import Protocol
 
-from seedwork.domain import AggregateRoot
-
-__all__ = ['Repository']
-
-T = TypeVar('T', bound=AggregateRoot, covariant=True)
+from seedwork.domain.typings import T
 
 
 class Repository(Protocol[T]):

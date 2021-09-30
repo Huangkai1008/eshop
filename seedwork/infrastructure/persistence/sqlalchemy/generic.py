@@ -3,12 +3,13 @@ from typing import ClassVar, Optional, Type
 from sqlalchemy.orm import Session
 
 from seedwork.domain import Entity
-from seedwork.domain.repository.generic import ID, GenericRepository, T
+from seedwork.domain.typings import T, ID
+from seedwork.domain.repository.generic import GenericRepository
 
 __all__ = ['SQLAlchemyGenericRepository']
 
 
-class SQLAlchemyGenericRepository(GenericRepository[ID, T]):
+class SQLAlchemyGenericRepository(GenericRepository[T, ID]):
     model: ClassVar[Type[Entity]]
 
     def __init__(self, session: Session) -> None:
@@ -18,7 +19,7 @@ class SQLAlchemyGenericRepository(GenericRepository[ID, T]):
         self.session.add(entity)
         return entity
 
-    def update(self, entity: T) -> Optional[T]:
+    def update(self, entity: T) -> T:
         self.session.add(entity)
         return entity
 

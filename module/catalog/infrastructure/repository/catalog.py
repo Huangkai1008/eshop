@@ -4,5 +4,5 @@ from seedwork.infrastructure.persistence.sqlalchemy import SQLAlchemyGenericRepo
 __all__ = ['CatalogRepository']
 
 
-class CatalogRepository(SQLAlchemyGenericRepository[Catalog]):
-    ...
+class CatalogRepository(SQLAlchemyGenericRepository[Catalog, int]):
+    model = Catalog
