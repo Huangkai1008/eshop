@@ -1,14 +1,17 @@
-from typing import Generic
+from typing import Generic, List, Tuple
 
-from seedwork.domain.repository.crud import ID, CRUDRepository, T
+from seedwork.domain.repository.generic import GenericRepository
+from seedwork.domain.typings import ID, T
 
 
-class GenericUseCase(Generic[ID, T]):
-    def __init__(self, repository: CRUDRepository) -> None:
+class GenericUseCase(Generic[T, ID]):
+    def __init__(self, repository: GenericRepository) -> None:
         self._repo = repository
 
-    def list(self, **kwargs) -> list[T]:
-        return self._repo.list(**kwargs)
+    def list(self, page: int, size: int, **kwargs: dict) -> Tuple[List[T], int]:
+        entities = self._repo.find_all(page=page, size=size, **kwargs)
+        total = self._repo.get_count(**kwargs)
+        return entities, total
 
     def create(self, entity: T) -> T:
         entity = self._repo.add(entity)
