@@ -1,10 +1,10 @@
-from typing import Protocol
+from abc import ABCMeta
 
-from seedwork.domain.typings import T, ID
+from seedwork.domain.typings import ID, T
 
 from .crud import CRUDRepository
-from .paginator import Paginator
+from .supports_paginate import SupportsPaginate
 
 
-class GenericRepository(CRUDRepository[T, ID], Paginator[T, ID], Protocol):
+class GenericRepository(CRUDRepository[T, ID], SupportsPaginate[T], metaclass=ABCMeta):
     ...

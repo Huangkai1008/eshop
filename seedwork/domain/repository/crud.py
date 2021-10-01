@@ -1,10 +1,10 @@
 from abc import abstractmethod
-from typing import Optional, Protocol
+from typing import Generic, Optional
 
 from seedwork.domain.typings import ID, T
 
 
-class CRUDRepository(Protocol[T, ID]):
+class CRUDRepository(Generic[T, ID]):
     @abstractmethod
     def add(self, entity: T) -> T:
         """Add an entity.

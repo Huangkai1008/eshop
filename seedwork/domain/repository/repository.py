@@ -1,7 +1,8 @@
-from typing import Protocol
+from typing import Protocol, runtime_checkable
 
-from seedwork.domain.typings import T
+from seedwork.domain.typings import T_co
 
 
-class Repository(Protocol[T]):
+@runtime_checkable
+class Repository(Protocol[T_co]):
     ...
