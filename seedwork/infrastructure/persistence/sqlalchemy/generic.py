@@ -1,3 +1,15 @@
+"""SQLAlchemy generic repository implementation.
+
+This module has a generic repository implementation for SQLAlchemy.
+
+
+Notes:
+    The session isn't closed after each operation.
+
+
+"""
+
+
 from typing import ClassVar, List, Optional, Type
 
 from sqlalchemy import Select, func, select
@@ -14,23 +26,23 @@ class SQLAlchemyGenericRepository(GenericRepository[T, ID]):
     model: ClassVar[Type[Entity]]
 
     def __init__(self, session: Session) -> None:
-        self.session: Session = session
+        self.session = session
 
     def add(self, entity: T) -> T:
         self.session.add(entity)
+        self.session.commit()
         return entity
 
     def update(self, entity: T) -> T:
         self.session.add(entity)
+        self.session.commit()
         return entity
 
     def delete(self, entity_id: ID) -> None:
-        entity = self.get(entity_id)
+        entity = self.session.get(self.model, entity_id)
         if entity:
             self.session.delete(entity)
-
-    def commit(self) -> None:
-        self.session.commit()
+            self.session.commit()
 
     def get(self, entity_id: ID) -> Optional[T]:
         return self.session.get(self.model, entity_id)  # type: ignore
@@ -55,8 +67,7 @@ class SQLAlchemyGenericRepository(GenericRepository[T, ID]):
         total = self.session.scalar(
             select(func.count()).select_from(self.model).where(*filter_expressions)
         )
-        assert total is not None
-        return total
+        return total  # type: ignore
 
     def _get_filter_expressions(self, **kwargs: dict) -> list:
         return [getattr(self.model, k) == v for k, v in kwargs.items()]

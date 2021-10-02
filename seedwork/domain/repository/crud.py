@@ -32,14 +32,6 @@ class CRUDRepository(Generic[T, ID]):
         """
 
     @abstractmethod
-    def commit(self) -> None:
-        """Commit the current transaction.
-
-        If the implementation isn't transactional, this method does nothing.
-
-        """
-
-    @abstractmethod
     def get(self, entity_id: ID) -> Optional[T]:
         """Get an entity based on the given primary key identifier.
 
