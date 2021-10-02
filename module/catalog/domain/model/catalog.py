@@ -2,11 +2,11 @@ from dataclasses import dataclass
 from decimal import Decimal
 
 from module.catalog.domain.exception import CatalogDomainException
-from seedwork.domain import Entity
+from seedwork.domain import AutoEntity
 
 
 @dataclass
-class Catalog(Entity):
+class Catalog(AutoEntity):
     name: str
     description: str
     price: Decimal
