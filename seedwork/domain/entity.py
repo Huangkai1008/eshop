@@ -7,9 +7,6 @@ from typing_extensions import TypeAlias
 EntityId: TypeAlias = Union[int, str]
 
 
-__all__ = ['EntityId', 'Entity']
-
-
 @dataclass
 class Entity:
     """Entity base class.
@@ -36,3 +33,18 @@ class Entity:
 
     def __hash__(self) -> int:
         return hash(self.id)
+
+
+@dataclass
+class AutoEntity(Entity):
+    """Entity base class with auto incremented id.
+
+    Attributes:
+        id: Unique identifier of the entity.
+
+    """
+
+    id: int = field(init=False)
+
+    def __post_init__(self) -> None:
+        ...
