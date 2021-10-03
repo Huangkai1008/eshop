@@ -1,3 +1,5 @@
+from typing import Any, Callable
+
 from fastapi import FastAPI, Request
 
 from module.catalog.api.v1 import endpoint
@@ -13,7 +15,7 @@ def create_app() -> FastAPI:
     app.include_router(endpoint.router)
 
     @app.middleware('http')
-    def resource_lifespan_middleware(request: Request, call_next):
+    def resource_lifespan_middleware(request: Request, call_next: Callable) -> Any:
         container.init_resources()
         response = call_next(request)
         container.shutdown_resources()
