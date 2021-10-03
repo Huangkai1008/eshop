@@ -1,14 +1,29 @@
-from module.catalog.domain.model import Catalog
-from seedwork.application import QueryModel
+from decimal import Decimal
+
+from seedwork.application import BaseModel, QueryModel
 
 
-class CatalogModel(Catalog):
+class CatalogModel(BaseModel):
+    name: str
+    description: str
+    price: Decimal
+    picture_file_name: str
+    picture_uri: str
+    catalog_type_id: int
+    catalog_brand_id: int
+    available_stock: int
+    restock_threshold: int
+    max_stock_threshold: int
+    on_reorder: bool
+
+
+class CatalogViewModel(CatalogModel):
+    id: int
+
+
+class CatalogQuery(QueryModel):
     ...
 
 
-class QueryCatalog(QueryModel):
-    ...
-
-
-class CreateCatalog(CatalogModel):
+class CatalogCreate(CatalogModel):
     ...
