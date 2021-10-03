@@ -1,6 +1,6 @@
 from .command import Command
 from .model import BaseModel, PaginatedItemsViewModel, QueryModel
-from .usecase import GenericUseCase
+from .use_case import GenericUseCase
 
 __all__ = [
     'Command',
