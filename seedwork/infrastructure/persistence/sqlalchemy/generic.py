@@ -10,7 +10,7 @@ Notes:
 """
 
 
-from typing import ClassVar, List, Optional, Type
+from typing import Any, ClassVar, List, Optional, Type
 
 from sqlalchemy import Select, func, select
 from sqlalchemy.orm import Session
@@ -33,9 +33,13 @@ class SQLAlchemyGenericRepository(GenericRepository[T, ID]):
         self.session.commit()
         return entity
 
-    def update(self, entity: T) -> T:
-        self.session.add(entity)
-        self.session.commit()
+    def update(self, entity_id: ID, payload: dict[str, Any]) -> Optional[T]:
+        entity: Optional[T] = self.get(entity_id)
+        if entity:
+            for key, value in payload.items():
+                setattr(entity, key, value)
+            self.session.commit()
+
         return entity
 
     def delete(self, entity_id: ID) -> None:

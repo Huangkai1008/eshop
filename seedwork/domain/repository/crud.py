@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from typing import Generic, Optional
+from typing import Any, Generic, Optional
 
 from seedwork.domain.typings import ID, T
 
@@ -15,8 +15,10 @@ class CRUDRepository(Generic[T, ID]):
         """
 
     @abstractmethod
-    def update(self, entity: T) -> T:
-        """Update and return an entity based on the given primary key identifier.
+    def update(self, entity_id: ID, payload: dict[str, Any]) -> Optional[T]:
+        """Partial update an entity based on the given primary key identifier.
+
+        If the entity doesn't exist, do nothing.
 
         Returns:
             The updated entity instance.

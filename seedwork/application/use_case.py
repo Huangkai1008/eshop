@@ -6,7 +6,7 @@ from seedwork.domain.typings import ID, T
 
 class GenericUseCase(Generic[T, ID]):
     def __init__(self, repository: GenericRepository) -> None:
-        self._repo = repository
+        self._repo: GenericRepository = repository
 
     def list(
         self, page: Optional[int] = None, size: Optional[int] = None, **kwargs: dict
@@ -15,13 +15,19 @@ class GenericUseCase(Generic[T, ID]):
         total = self._repo.get_count(**kwargs)
         return entities, total
 
+    def get(self, entity_id: ID) -> Optional[T]:
+        return self._repo.get(entity_id)
+
     def create(self, entity: T) -> T:
         entity = self._repo.add(entity)
         return entity
 
-    def update(self, entity: T) -> T:
-        entity = self._repo.update(entity)
-        return entity
+    def update(self, entity_id: ID, update_entity: T) -> Optional[T]:
+        if not self._repo.get(entity_id):
+            return None
+
+        update_entity.id = entity_id
+        return self._repo.add(update_entity)  # type: ignore
 
     def delete(self, entity_id: ID) -> None:
         self._repo.delete(entity_id)

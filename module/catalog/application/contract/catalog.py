@@ -21,9 +21,13 @@ class CatalogViewModel(CatalogModel):
     id: int
 
 
-class CatalogQuery(QueryModel):
+class QueryCatalog(QueryModel):
     ...
 
 
-class CatalogCreate(CatalogModel):
+class CreateCatalog(CatalogModel):
+    ...
+
+
+class UpdateCatalog(CatalogModel):
     ...

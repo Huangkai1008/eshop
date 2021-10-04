@@ -1,7 +1,7 @@
-from .catalog import CatalogCreate, CatalogModel, CatalogQuery
+from .catalog import CatalogModel, CreateCatalog, QueryCatalog
 
 __all__ = [
     'CatalogModel',
-    'CatalogQuery',
-    'CatalogCreate',
+    'QueryCatalog',
+    'CreateCatalog',
 ]
