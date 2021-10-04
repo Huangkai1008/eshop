@@ -1,9 +1,16 @@
 from typing import Any, Callable
 
 from fastapi import FastAPI, Request
+from fastapi.exceptions import RequestValidationError
 
 from module.catalog.api.v1 import endpoint
 from module.catalog.container import Container
+from module.catalog.exception import (
+    bad_request_handler,
+    page_not_found_handler,
+    server_error_handler,
+    validation_exception_handler,
+)
 from module.catalog.infrastructure.mapper import start_mappers
 
 
@@ -12,6 +19,12 @@ def create_app() -> FastAPI:
 
     app = FastAPI()
     app.container = container  # type: ignore
+
+    app.add_exception_handler(404, page_not_found_handler)
+    app.add_exception_handler(400, bad_request_handler)
+    app.add_exception_handler(RequestValidationError, validation_exception_handler)
+    app.add_exception_handler(500, server_error_handler)
+
     app.include_router(endpoint.router)
 
     @app.middleware('http')
