@@ -17,7 +17,11 @@ from module.catalog.infrastructure.mapper import start_mappers
 def create_app() -> FastAPI:
     container = Container()
 
-    app = FastAPI()
+    app = FastAPI(
+        title='Catalog API',
+        description='Catalog API',
+        version='0.1.0',
+    )
     app.container = container  # type: ignore
 
     app.add_exception_handler(404, page_not_found_handler)
@@ -29,7 +33,6 @@ def create_app() -> FastAPI:
 
     @app.middleware('http')
     def resource_lifespan_middleware(request: Request, call_next: Callable) -> Any:
-        container.init_resources()
         response = call_next(request)
         container.shutdown_resources()
         return response
