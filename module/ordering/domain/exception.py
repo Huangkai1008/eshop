@@ -1,4 +1,6 @@
-class OrderingDomainException(Exception):
-    def __init__(self, message: str) -> None:
-        super().__init__(message)
-        self.message = message
+from seedwork.domain import DomainException
+
+
+class OrderingDomainException(DomainException):
+    ...
+

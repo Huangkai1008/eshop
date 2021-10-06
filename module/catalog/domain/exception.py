@@ -1,4 +1,5 @@
-class CatalogDomainException(Exception):
-    def __init__(self, message: str) -> None:
-        super().__init__(message)
-        self.message = message
+from seedwork.domain.exception import DomainException
+
+
+class CatalogDomainException(DomainException):
+    ...
