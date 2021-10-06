@@ -4,6 +4,7 @@ from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Depends
 from starlette.exceptions import HTTPException
 
+from module.catalog.api.model import Message
 from module.catalog.application.contract.catalog import (
     CatalogViewModel,
     CreateCatalog,
@@ -37,7 +38,11 @@ def create_catalog(
     return catalog_use_case.create(Catalog(**model.model_dump()))
 
 
-@router.get('/items/{item_id}/', response_model=CatalogViewModel)
+@router.get(
+    '/items/{item_id}/',
+    response_model=CatalogViewModel,
+    responses={404: {'model': Message}},
+)
 @inject
 def get_catalog(
     item_id: int,
@@ -50,7 +55,11 @@ def get_catalog(
     return catalog
 
 
-@router.put('/items/{item_id}/', response_model=CatalogViewModel)
+@router.put(
+    '/items/{item_id}/',
+    response_model=CatalogViewModel,
+    responses={404: {'model': Message}},
+)
 @inject
 def update_catalog(
     item_id: int,
