@@ -10,20 +10,21 @@ Notes:
 """
 
 
-from typing import Any, ClassVar, List, Optional, Type
+from typing import Any, ClassVar, List, Optional, Type, TypeVar, Union
 
 from sqlalchemy import Select, func, select
 from sqlalchemy.orm import Session
 
+from module.catalog.domain.model.catalog_brand import DataEntity
 from seedwork.domain import Entity
 from seedwork.domain.repository.generic import GenericRepository
-from seedwork.domain.typings import ID, T
+from seedwork.domain.typings import ID, EntityType, T
 
 __all__ = ['SQLAlchemyGenericRepository']
 
 
 class SQLAlchemyGenericRepository(GenericRepository[T, ID]):
-    model: ClassVar[Type[Entity]]
+    model: ClassVar[Type[EntityType]]
 
     def __init__(self, session: Session) -> None:
         self.session = session
