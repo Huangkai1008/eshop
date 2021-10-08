@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+import "google/api/annotations.proto";
+
+package eshop.catalog.api.v1;
+
+message GetCatalogRequest {
+  int32 id = 1;
+}
+
+message ListCatalogRequest {
+  string ids = 1;
+  int32 page = 2;
+  int32 size = 3;
+}
+
+message Catalog {
+  string name = 1;
+  string description = 2;
+  double price = 3;
+  string picture_file_name = 4;
+  string picture_uri = 5;
+  CatalogType catalog_type = 6;
+  CatalogBrand catalog_brand = 7;
+  int32 available_stock = 8;
+  int32 restock_threshold = 9;
+  int32 max_stock_threshold = 10;
+  bool on_reorder = 11;
+}
+
+message CatalogType {
+  int32 id = 1;
+  string name = 2;
+}
+
+message CatalogBrand {
+  int32 id = 1;
+  string name = 2;
+}
+
+message PaginatedCatalog {
+  repeated Catalog items = 1;
+  int32 total = 2;
+}
+
+service CatalogService {
+  rpc GetCatalog(GetCatalogRequest) returns (Catalog) {
+    option (google.api.http) = {
+      get: "/api/v1/catalog/items/{id}"
+    };
+  }
+
+  rpc ListCatalog(ListCatalogRequest) returns (PaginatedCatalog) {
+    option (google.api.http) = {
+      get: "/api/v1/catalog/items"
+    };
+  }
+}

@@ -17,6 +17,8 @@ uvicorn = {version = "^0.23.2", extras = ["standard"]}
 loguru = "^0.7.0"
 pydantic-settings = "^2.0.2"
 python-dotenv = "^1.0.0"
+protobuf = "^4.23.4"
+grpcio-tools = "^1.56.2"
 
 [tool.poetry.group.dev.dependencies]
 flake8 = "^6.0.0"

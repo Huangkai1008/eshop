@@ -6,7 +6,7 @@ class QueryCatalogBrand(QueryModel):
 
 
 class CatalogBrandModel(BaseModel):
-    brand: str
+    name: str
 
 
 class CatalogBrandViewModel(CatalogBrandModel):
