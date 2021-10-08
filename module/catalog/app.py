@@ -3,19 +3,22 @@ from typing import Any, Callable
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 
-from module.catalog.api.v1 import endpoint
-from module.catalog.container import Container
+from module.catalog.api.router import v1_router
+from module.catalog.container import ApplicationContainer
 from module.catalog.exception import (
     bad_request_handler,
     page_not_found_handler,
     server_error_handler,
     validation_exception_handler,
 )
-from module.catalog.infrastructure.mapper import start_mappers
+from module.catalog.setting import Settings
 
 
 def create_app() -> FastAPI:
-    container = Container()
+    setting = Settings()  # type: ignore
+
+    container = ApplicationContainer()
+    container.config.from_dict(setting.model_dump())
 
     app = FastAPI(
         title='Catalog API',
@@ -29,7 +32,7 @@ def create_app() -> FastAPI:
     app.add_exception_handler(RequestValidationError, validation_exception_handler)
     app.add_exception_handler(500, server_error_handler)
 
-    app.include_router(endpoint.router)
+    app.include_router(v1_router)
 
     @app.middleware('http')
     def resource_lifespan_middleware(request: Request, call_next: Callable) -> Any:
@@ -37,5 +40,4 @@ def create_app() -> FastAPI:
         container.shutdown_resources()
         return response
 
-    start_mappers()
     return app

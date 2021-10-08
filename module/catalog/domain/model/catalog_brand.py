@@ -1,8 +1,9 @@
-from dataclasses import dataclass
+from sqlalchemy.orm import Mapped
 
-from seedwork.domain.entity import Entity
+from seedwork.infrastructure.persistence.sqlalchemy import DataEntity, str_field
 
 
-@dataclass
-class CatalogBrand(Entity):
-    brand: str
+class CatalogBrand(DataEntity):
+    __tablename__ = 'catalog_brand'
+
+    brand: Mapped[str_field]

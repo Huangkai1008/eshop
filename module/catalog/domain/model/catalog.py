@@ -1,23 +1,31 @@
-from dataclasses import dataclass
 from decimal import Decimal
 
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
 from module.catalog.domain.exception import CatalogDomainException
-from seedwork.domain import AutoEntity
+from seedwork.infrastructure.persistence.sqlalchemy import DataEntity, str_field
+
+from .catalog_brand import CatalogBrand
+from .catalog_type import CatalogType
 
 
-@dataclass
-class Catalog(AutoEntity):
-    name: str
-    description: str
-    price: Decimal
-    picture_file_name: str
-    picture_uri: str
-    catalog_type_id: int
-    catalog_brand_id: int
-    available_stock: int
-    restock_threshold: int
-    max_stock_threshold: int
-    on_reorder: bool
+class Catalog(DataEntity):
+    __tablename__ = 'catalog'
+
+    name: Mapped[str_field]
+    description: Mapped[str_field]
+    price: Mapped[Decimal]
+    picture_file_name: Mapped[str_field]
+    picture_uri: Mapped[str_field]
+    catalog_type_id: Mapped[int] = mapped_column(ForeignKey('catalog_type.id'))
+    catalog_brand_id: Mapped[int] = mapped_column(ForeignKey('catalog_brand.id'))
+    catalog_type: Mapped[CatalogType] = relationship(CatalogType, uselist=False)
+    catalog_brand: Mapped[CatalogBrand] = relationship(CatalogBrand, uselist=False)
+    available_stock: Mapped[int]
+    restock_threshold: Mapped[int]
+    max_stock_threshold: Mapped[int]
+    on_reorder: Mapped[int]
 
     def remove_stock(self, desired_quantity: int) -> int:
         """Remove stock from the catalog.

@@ -1,7 +1,10 @@
 from logging.config import fileConfig
 
 from alembic import context
+from dotenv import load_dotenv
 from sqlalchemy import engine_from_config, pool
+
+load_dotenv('module/catalog/.env')
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -16,9 +19,10 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-from module.catalog.infrastructure.mapper import metadata  # noqa: E402
+from module.catalog.domain.model import Catalog, CatalogBrand  # noqa: F401
 
-target_metadata = metadata
+target_metadata = Catalog.metadata  # noqa: F405
+
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:

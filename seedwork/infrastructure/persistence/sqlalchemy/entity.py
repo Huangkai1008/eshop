@@ -18,7 +18,8 @@ class DataEntity(MappedAsDataclass, Base):
         DataEntity only used in Supporting Domain Model with a Data Mapper pattern.
         For a complex domain model, you should use AggregateRoot.
 
-        For fastapi application, you can use SqlModel library to generate pydantic, it's simpler.
+        For fastapi application, you can use SqlModel library to generate pydantic,
+        it's simpler.
 
     """
 

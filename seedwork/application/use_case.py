@@ -26,8 +26,11 @@ class GenericUseCase(Generic[T, ID]):
         if not self._repo.get(entity_id):
             return None
 
-        update_entity.id = entity_id
-        return self._repo.add(update_entity)  # type: ignore
+        entity = self._repo.get(entity_id)
+        for key, value in update_entity.__dict__.items():
+            setattr(entity, key, value)
+
+        return self._repo.add(entity)  # type: ignore
 
     def delete(self, entity_id: ID) -> None:
         self._repo.delete(entity_id)
