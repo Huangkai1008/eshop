@@ -12,7 +12,7 @@ from module.catalog.application.contract.catalog import (
 )
 from module.catalog.application.use_case import CatalogUseCase
 from module.catalog.container import ApplicationContainer
-from module.catalog.domain.model import Catalog
+from module.catalog.domain import Catalog
 from seedwork.application import PaginatedItemsViewModel
 
 router = APIRouter()

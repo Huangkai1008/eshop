@@ -1,4 +1,4 @@
-from module.catalog.domain.model import CatalogBrand
+from module.catalog.domain import CatalogBrand
 from seedwork.infrastructure.persistence.sqlalchemy import SQLAlchemyGenericRepository
 
 

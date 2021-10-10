@@ -19,7 +19,7 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-from module.catalog.domain.model import Catalog, CatalogBrand  # noqa: F401
+from module.catalog.domain import Catalog, CatalogBrand  # noqa: F401
 
 target_metadata = Catalog.metadata  # noqa: F405
 

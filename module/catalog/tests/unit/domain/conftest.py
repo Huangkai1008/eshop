@@ -3,7 +3,7 @@ from typing import Any, Callable
 
 import pytest
 
-from module.catalog.domain.model.catalog import Catalog
+from module.catalog.domain import Catalog
 
 catalog = dict(
     name='name',
@@ -14,6 +14,8 @@ catalog = dict(
     restock_threshold=1,
     catalog_type_id=1,
     catalog_brand_id=1,
+    catalog_type=dict(name='catalog_type'),
+    catalog_brand=dict(name='catalog_brand'),
     available_stock=1,
     max_stock_threshold=1,
     on_reorder=False,

@@ -1,4 +1,4 @@
-from module.catalog.domain.model import Catalog, CatalogBrand, CatalogType
+from module.catalog.domain import Catalog, CatalogBrand, CatalogType
 from module.catalog.infrastructure.repository.catalog import CatalogRepository
 from module.catalog.infrastructure.repository.catalog_brand import (
     CatalogBrandRepository,

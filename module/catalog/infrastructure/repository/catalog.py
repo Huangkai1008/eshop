@@ -1,4 +1,4 @@
-from module.catalog.domain.model.catalog import Catalog
+from module.catalog.domain.catalog import Catalog
 from seedwork.infrastructure.persistence.sqlalchemy import SQLAlchemyGenericRepository
 
 __all__ = ['CatalogRepository']

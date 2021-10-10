@@ -9,7 +9,7 @@ from module.catalog.application.contract.catalog_brand import (
 )
 from module.catalog.application.use_case import CatalogBrandUseCase
 from module.catalog.container import ApplicationContainer
-from module.catalog.domain.model import CatalogBrand
+from module.catalog.domain import CatalogBrand
 from seedwork.application import PaginatedItemsViewModel
 
 router = APIRouter()

@@ -2,8 +2,8 @@ from typing import Callable
 
 import pytest
 
+from module.catalog.domain.catalog import Catalog
 from module.catalog.domain.exception import CatalogDomainException
-from module.catalog.domain.model.catalog import Catalog
 
 
 class TestCatalog:
