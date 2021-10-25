@@ -1,22 +1,11 @@
-from dataclasses import dataclass
-from decimal import Decimal
+from dataclasses import dataclass, field
 
 from seedwork.domain import AggregateRoot
 
-from .exception import BasketDomainException
+from .basket_item import BasketItem
 
 
 @dataclass
-class BasketItem(AggregateRoot):
-    product_id: int
-    product_name: str
-    unit_price: Decimal
-    quantity: int
-    picture_url: str
-
-    def __post_init__(self) -> None:
-        self._quantity_should_greater_than_zero()
-
-    def _quantity_should_greater_than_zero(self) -> None:
-        if self.quantity <= 0:
-            raise BasketDomainException('Invalid number of quantity')
+class Basket(AggregateRoot):
+    buyer_id: str
+    items: list[BasketItem] = field(default_factory=list)
