@@ -1,9 +1,11 @@
+from abc import abstractmethod
 from typing import Optional, Protocol
 
 from .basket import Basket
 
 
 class IBasketRepository(Protocol):
+    @abstractmethod
     def get(self, buyer_id: str) -> Optional[Basket]:
         """Get basket by buyer id.
 
@@ -12,6 +14,7 @@ class IBasketRepository(Protocol):
 
         """
 
+    @abstractmethod
     def update(self, basket: Basket) -> Optional[Basket]:
         """Update a basket and return it.
 
@@ -20,6 +23,7 @@ class IBasketRepository(Protocol):
 
         """
 
+    @abstractmethod
     def delete(self, basket_id: str) -> bool:
         """Delete a basket by id.
 

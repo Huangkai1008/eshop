@@ -8,4 +8,8 @@ class Account(DataEntity):
     __tablename__ = 'account'
 
     name: Mapped[str_field]
-    password_hash: Mapped[str] = mapped_column(String(1024), nullable=False)
+    password: Mapped[str] = mapped_column(String(1024), nullable=False)
+
+    card_number: Mapped[str_field] = mapped_column(nullable=False)
+    security_number: Mapped[str_field] = mapped_column(nullable=False)
+    expiration: Mapped[str_field] = mapped_column(nullable=False)
