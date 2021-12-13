@@ -1,6 +1,4 @@
-from .catalog import Catalog
-from .catalog_brand import CatalogBrand
-from .catalog_type import CatalogType
+from .catalog import Catalog, CatalogBrand, CatalogType
 
 __all__ = [
     'Catalog',

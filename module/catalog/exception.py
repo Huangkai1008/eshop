@@ -28,7 +28,7 @@ class BadRequestException(HTTPException):
 
 async def page_not_found_handler(_: Request, exc: HTTPException) -> JSONResponse:
     logger.warning(exc.detail)
-    return JSONResponse(dict(message='item not found'), status_code=exc.status_code)
+    return JSONResponse(dict(message='Item not found'), status_code=exc.status_code)
 
 
 async def bad_request_handler(_: Request, exc: BadRequestException) -> JSONResponse:
@@ -53,5 +53,5 @@ async def server_error_handler(_: Request, __: HTTPException) -> JSONResponse:
     logger.error('SERVER ERROR')
     logger.warning(traceback.format_exc())
     return JSONResponse(
-        dict(message='server error'), status_code=HTTP_500_INTERNAL_SERVER_ERROR
+        dict(message='Server error'), status_code=HTTP_500_INTERNAL_SERVER_ERROR
     )

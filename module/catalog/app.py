@@ -1,7 +1,7 @@
 from typing import Any, Callable
 
 from fastapi import FastAPI, Request
-from fastapi.exceptions import RequestValidationError
+from fastapi.exceptions import RequestValidationError, ResponseValidationError
 
 from module.catalog.api.router import v1_router
 from module.catalog.container import ApplicationContainer
@@ -30,6 +30,7 @@ def create_app() -> FastAPI:
     app.add_exception_handler(404, page_not_found_handler)
     app.add_exception_handler(400, bad_request_handler)
     app.add_exception_handler(RequestValidationError, validation_exception_handler)
+    app.add_exception_handler(ResponseValidationError, validation_exception_handler)
     app.add_exception_handler(500, server_error_handler)
 
     app.include_router(v1_router)

@@ -20,7 +20,7 @@ class RedisClient:
     redis_cluster_nodes: Optional[list[str]]
 
     redis_conn_name: Optional[str] = REDIS_DEFAULT_CONN_NAME
-    redis_sentinel_connect_args: Optional[dict] = field(
+    redis_sentinel_connect_args: dict = field(
         default_factory=lambda: dict(service_name='mymaster')
     )
 
@@ -71,7 +71,7 @@ class RedisClient:
         self.raw_client = client().master_for(service_name)
 
     @staticmethod
-    def _get_redis_sentinel_nodes(sentinel_nodes: list[str]) -> list[tuple]:
+    def _get_redis_sentinel_nodes(sentinel_nodes: list[str]) -> list[tuple[str, str]]:
         start_up_nodes = []
         for node in sentinel_nodes:
             host, port = node.split(':')

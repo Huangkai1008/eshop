@@ -1,37 +1,69 @@
 from decimal import Decimal
+from typing import Optional
 
-from sqlalchemy import ForeignKey
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlmodel import Field, Relationship
 
 from module.catalog.domain.exception import CatalogDomainException
-from seedwork.infrastructure.persistence.sqlalchemy import DataEntity, str_field
+from seedwork.infrastructure.persistence.sqlmodel import (
+    SQLModelEntity,
+    id_field,
+    str_field,
+)
 
-from .catalog_brand import CatalogBrand
-from .catalog_type import CatalogType
+
+class _CatalogBrand(SQLModelEntity):
+    name: str = str_field
 
 
-class Catalog(DataEntity):
-    __tablename__ = 'catalog'
+class CatalogBrand(_CatalogBrand, table=True):
+    id: Optional[int] = id_field
 
-    name: Mapped[str_field]
-    description: Mapped[str_field]
-    price: Mapped[Decimal]
-    picture_file_name: Mapped[str_field]
-    picture_uri: Mapped[str_field]
-    catalog_type_id: Mapped[int] = mapped_column(ForeignKey('catalog_type.id'))
-    catalog_brand_id: Mapped[int] = mapped_column(ForeignKey('catalog_brand.id'))
-    catalog_type: Mapped[CatalogType] = relationship(CatalogType, uselist=False)
-    catalog_brand: Mapped[CatalogBrand] = relationship(CatalogBrand, uselist=False)
-    available_stock: Mapped[int]
-    restock_threshold: Mapped[int]
-    max_stock_threshold: Mapped[int]
-    on_reorder: Mapped[int]
+
+class CreateCatalogBrand(_CatalogBrand):
+    ...
+
+
+class _CatalogType(SQLModelEntity):
+    name: str = str_field
+
+
+class CreateCatalogType(_CatalogType):
+    ...
+
+
+class CatalogType(_CatalogType, table=True):
+    id: Optional[int] = id_field
+
+
+class _Catalog(SQLModelEntity):
+    description: str = str_field
+    price: Decimal
+    picture_file_name: str = str_field
+    picture_uri: Optional[str] = str_field
+    available_stock: int
+    restock_threshold: int
+    max_stock_threshold: int
+    on_reorder: int
+
+    catalog_type_id: int
+    catalog_brand_id: int
+
+
+class Catalog(_Catalog, table=True):
+    id: Optional[int] = id_field
+    name: str = str_field
+
+    catalog_type_id: int = Field(foreign_key='catalog_type.id')
+    catalog_brand_id: int = Field(foreign_key='catalog_brand.id')
+    catalog_type: Optional[CatalogType] = Relationship()
+    catalog_brand: Optional[CatalogBrand] = Relationship()
 
     def remove_stock(self, desired_quantity: int) -> int:
         """Remove stock from the catalog.
 
         Args:
             desired_quantity: Desired quantity to remove.
+
         Returns:
             The number actually removed from stock.
 
@@ -54,3 +86,17 @@ class Catalog(DataEntity):
 
         self.available_stock -= removed_quantity
         return removed_quantity
+
+
+class CreateCatalog(_Catalog):
+    name: str = str_field
+
+
+class UpdateCatalog(_Catalog):
+    ...
+
+
+class CatalogViewModel(_Catalog):
+    id: int
+    catalog_type: CatalogType
+    catalog_brand: CatalogBrand

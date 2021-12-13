@@ -1,4 +1,4 @@
-from typing import Generic, List, Optional, Tuple
+from typing import Any, Generic, List, Optional, Tuple
 
 from seedwork.domain.repository.generic import GenericRepository
 from seedwork.domain.typings import ID, T
@@ -22,15 +22,8 @@ class GenericUseCase(Generic[T, ID]):
         entity = self._repo.add(entity)
         return entity
 
-    def update(self, entity_id: ID, update_entity: T) -> Optional[T]:
-        if not self._repo.get(entity_id):
-            return None
-
-        entity = self._repo.get(entity_id)
-        for key, value in update_entity.__dict__.items():
-            setattr(entity, key, value)
-
-        return self._repo.add(entity)  # type: ignore
+    def update(self, entity_id: ID, payload: dict[str, Any]) -> Optional[T]:
+        return self._repo.update(entity_id, payload)
 
     def delete(self, entity_id: ID) -> None:
         self._repo.delete(entity_id)

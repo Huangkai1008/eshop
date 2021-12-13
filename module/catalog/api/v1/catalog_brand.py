@@ -3,10 +3,7 @@ from typing import Any
 from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Depends
 
-from module.catalog.application.contract.catalog_brand import (
-    CreateCatalogBrand,
-    QueryCatalogBrand,
-)
+from module.catalog.application.contract.catalog_brand import QueryCatalogBrand
 from module.catalog.application.use_case import CatalogBrandUseCase
 from module.catalog.container import ApplicationContainer
 from module.catalog.domain import CatalogBrand
@@ -30,9 +27,9 @@ def get_catalog_brands(
 @router.post('/catalog-brands/', response_model=CatalogBrand, status_code=201)
 @inject
 def create_catalog_brand(
-    model: CreateCatalogBrand,
+    model: CatalogBrand,
     catalog_brand_use_case: CatalogBrandUseCase = Depends(
         Provide(ApplicationContainer.catalog_brand_use_case)
     ),
 ) -> Any:
-    return catalog_brand_use_case.create(CatalogBrand(**dict(model)))
+    return catalog_brand_use_case.create(model)

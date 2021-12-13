@@ -4,21 +4,21 @@ from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Depends, HTTPException
 
 from module.catalog.api.model import Message
-from module.catalog.application.contract.catalog import (
-    CatalogViewModel,
-    CreateCatalog,
-    QueryCatalog,
-    UpdateCatalog,
-)
+from module.catalog.application.contract.catalog import QueryCatalog
 from module.catalog.application.use_case import CatalogUseCase
 from module.catalog.container import ApplicationContainer
-from module.catalog.domain import Catalog
+from module.catalog.domain.catalog import (
+    Catalog,
+    CatalogViewModel,
+    CreateCatalog,
+    UpdateCatalog,
+)
 from seedwork.application import PaginatedItemsViewModel
 
 router = APIRouter()
 
 
-@router.get('/items/', response_model=PaginatedItemsViewModel[CatalogViewModel])
+@router.get('/items/', response_model=PaginatedItemsViewModel[Catalog])
 @inject
 def get_catalogs(
     query: QueryCatalog = Depends(QueryCatalog),
@@ -30,7 +30,7 @@ def get_catalogs(
     return dict(items=items, total=total)
 
 
-@router.post('/items/', response_model=CatalogViewModel, status_code=201)
+@router.post('/items/', response_model=Catalog, status_code=201)
 @inject
 def create_catalog(
     model: CreateCatalog,
@@ -38,7 +38,7 @@ def create_catalog(
         Provide(ApplicationContainer.catalog_use_case)
     ),
 ) -> Any:
-    return catalog_use_case.create(Catalog(**dict(model)))
+    return catalog_use_case.create(Catalog(**model.dict()))
 
 
 @router.get(
@@ -62,7 +62,7 @@ def get_catalog(
 
 @router.put(
     '/items/{item_id}/',
-    response_model=CatalogViewModel,
+    response_model=Catalog,
     responses={404: {'model': Message}},
 )
 @inject
@@ -73,7 +73,7 @@ def update_catalog(
         Provide(ApplicationContainer.catalog_use_case)
     ),
 ) -> Any:
-    catalog = catalog_use_case.update(item_id, Catalog(**dict(model)))
+    catalog = catalog_use_case.update(item_id, model.dict())
     if not catalog:
         raise HTTPException(status_code=404)
 
