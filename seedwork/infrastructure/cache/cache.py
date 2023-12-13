@@ -9,5 +9,8 @@ class CacheClient(Protocol):
     def get(self, key: str) -> Any:
         ...
 
-    def set(self, key: str) -> Any:
+    def set(self, key: str, value: Any) -> Any:
+        ...
+
+    def delete(self, key: str) -> bool:
         ...

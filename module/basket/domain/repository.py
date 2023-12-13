@@ -24,13 +24,13 @@ class IBasketRepository(Protocol):
         """
 
     @abstractmethod
-    def delete(self, basket_id: str) -> bool:
-        """Delete a basket by id.
+    def delete(self, buyer_id: str) -> bool:
+        """Delete a basket by buyer Id.
 
         If the basket doesn't exist, ignore it.
 
         Args:
-            basket_id: Basket id.
+            buyer_id: Buyer Id.
 
         Returns:
             Whether the basket is deleted.

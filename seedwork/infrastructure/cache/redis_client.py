@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 from functools import partial
-from typing import Final, Optional
+from typing import Any, Final, Optional
 
 from redis import RedisCluster, Sentinel, StrictRedis
 
@@ -23,6 +23,19 @@ class RedisClient:
     redis_sentinel_connect_args: dict = field(
         default_factory=lambda: dict(service_name='mymaster')
     )
+
+    def get(self, key: str) -> Any:
+        return self.client.get(key)
+
+    def set(self, key: str, value: Any) -> Any:
+        return self.client.set(key, value)
+
+    def delete(self, key: str) -> bool:
+        if not self.client.exists(key):
+            return False
+
+        self.client.delete(key)
+        return True
 
     def __post_init__(self) -> None:
         connection_kwargs: dict = dict(

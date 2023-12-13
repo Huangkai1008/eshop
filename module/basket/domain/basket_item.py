@@ -11,6 +11,7 @@ class BasketItem(Entity):
     product_id: int
     product_name: str
     unit_price: Decimal
+    old_unit_price: Decimal
     quantity: int
     picture_url: str
 
